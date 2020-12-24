@@ -1,0 +1,261 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;700&display=swap");
+
+
+body, html, .container{
+	height: 100%;
+}
+
+
+/*
+	nice colors : #a72443 [red for btn]
+*/
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body{
+	font-family: "Nunito", sans-serif;
+	background-color: #1d1e20;
+}
+
+.container {
+	max-width: 1000px;
+    margin: auto;
+	display: flex;
+	flex-direction: column;
+}
+
+nav {
+	height: 10vh;
+	padding: 1em 0;
+	display: flex;
+	align-items: center;
+	padding: 0 2em;
+}
+
+.logo{
+	width: 3em;
+}
+
+.nav__links{
+    display: flex;
+    justify-content: normal;
+	list-style: none;
+	margin-left: 1.5em;
+}
+.nav__links li{
+	padding: 0 0.6em;
+}
+
+.nav__links li a {
+	color: rgba(255, 255, 255, 0.84);
+	font-size: 16px;
+	text-decoration: none;
+	font-weight: bold;
+	transition: all 0.3s ease 0s;
+}
+
+.nav__links li a:hover {
+	color: rgba(0, 177, 179, 1);
+}
+
+.nav__links .none-primary {
+	display: none;
+}
+
+/*
+	burger
+*/
+.burger {
+	display: none;
+}
+
+.burger div {
+	width: 25px;
+	height: 2px;
+	background: rgba(255, 255, 255, 0.64);
+	margin: 5px;
+	border-radius: 1px;
+	transition: all 0.3s ease;
+}
+
+/* nav button {
+	margin-left: 5px;
+} */
+
+.btn {
+	font-size: medium;
+	padding: 9px 22px;
+	color:#ffffff;
+	background-color: #00b1b3;
+	border: none;
+	border-radius: 50px;
+	cursor: pointer;
+	/* transition: all 0.3s ease 0s; */
+}
+.btn:hover {
+	background-color: rgba(0, 177, 179, 0.8);
+}
+.btn:focus {
+	outline: none;
+}
+
+/*
+Main 
+*/
+
+main {
+	padding: 3em;
+	color: #ffffff;
+	font-size: 16px;
+}
+
+/*
+
+hadchi li 
+lte7t mafih ta 3ib ghir kemel
+rak kayen mab9a walo
+*/
+
+footer {
+	margin-top: auto;
+}
+
+/**
+signature
+*/
+
+.signature {
+	margin: 10px auto;
+	padding: 10px 0;
+	width: 100%;
+}
+
+.signature p {
+	text-align: center;
+	font-family: "Nunito", sans-serif;
+	font-size: 0.85em;
+	color: #aaaaaa;
+}
+
+.signature .much-heart {
+	display: inline-block;
+	position: relative;
+	margin: 0 4px;
+	height: 10px;
+	width: 10px;
+	background: #ac1d3f;
+	border-radius: 4px;
+	-ms-transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+.signature .much-heart::before,
+.signature .much-heart::after {
+	display: block;
+	content: "";
+	position: absolute;
+	margin: auto;
+	height: 10px;
+	width: 10px;
+	border-radius: 5px;
+	background: #ac1d3f;
+	top: -4px;
+}
+
+.signature .much-heart::after {
+	bottom: 0;
+	top: auto;
+	left: -4px;
+}
+
+.signature a {
+	color: #aaaaaa;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+
+/* Grid System diyalooo */
+
+.columns {
+    display: flex;
+}
+
+.columns.is-multiline{
+    flex-wrap: wrap;
+}
+
+.columns:not(:last-child){
+    margin-bottom: 20px;
+}
+
+/* Grid system */
+
+.column.is-1 {
+    width: 8.3333%;
+    flex: none;
+}
+
+.column.is-2 {
+    width: 16.66667%;
+    flex: none;
+}
+
+.column.is-3 {
+    width: 25%;
+    flex: none;
+}
+
+.column.is-4 {
+    width: 33.333%;
+    flex: none;
+}
+
+.column.is-5 {
+    width: 41.66667%;
+    flex: none;
+}
+
+.column.is-6 {
+    width: 50%;
+    flex: none;
+}
+.column.is-7 {
+    width: 58.3333%;
+    flex: none;
+}
+.column.is-8 {
+    width: 66.66667%;
+    flex: none;
+}
+.column.is-9 {
+    width: 75%;
+    flex: none;
+}
+.column.is-10 {
+    width: 83.3333%;
+    flex: none;
+}
+.column.is-11 {
+    width: 91.66667%;
+    flex: none;
+}
+.column.is-12 {
+    width: 100%;
+    flex: none;
+}
+
+/* take how many you need without flex */
+.column.no-flex {
+    flex: none;
+}
+
+.column {
+    flex: 1;
+}
