@@ -12,5 +12,6 @@ use System\File;
 $file = new File(__DIR__);
 $app = Application::getInstance($file);
 
+
 $app->run();
 
