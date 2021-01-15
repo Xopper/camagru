@@ -14,7 +14,7 @@ class LogoutController extends Controller
 			$userModel->unsetCookieOnDB($user->id);
 			$this->session->remove('auth');
 			$this->cookie->remove("remember");
-			$this->session->set('flash', ['success' => "Your now logout!"]);
+			$this->session->set('flash', ['success' => "You are now logged out!"]);
 		}
 		$this->url->redirect("/");
 	}

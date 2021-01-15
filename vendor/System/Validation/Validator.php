@@ -32,6 +32,7 @@ class Validator
 					$error = (new ValidationStrategy(new $class($this->app, $key)))->validate();
 				}
 				if ($error) {
+					// . ($param ? ":" . $param : "")
 					$errors["_" . $key] = $error;
 					break;
 				}

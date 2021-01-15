@@ -1,7 +1,7 @@
 <form id="form" class="form" method="POST">
 	<h2>Reset your password</h2>
 	<div class="form-control">
-		<label for="email">Email :</label>
+		<label for="email">Email</label>
 		<input
 			type="email"
 			id="email"
@@ -9,6 +9,7 @@
 			placeholder="enter your email"
 			autocomplete="off"
 			required
+			maxlength="63"
 		/>
 		<small id="_email">Error msg here</small>
 	</div>

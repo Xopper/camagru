@@ -14,10 +14,7 @@ if (document.getElementById('form')){
 		// document.getElementById("btn-submit").style.pointerEvents = "none";
 		btn.style.pointerEvents = "none";
 		var oldContent = btn.innerHTML;
-		btn.innerHTML = "<i class='fa fa-circle-o-notch fa-spin'></i>";
-		// setTimeout(function() {
-		// 	btn.className = 'btn-submit fa fa-circle-o-notch fa-spin fa-3x fa-fw';
-		// }, 8000);
+		btn.innerHTML = "<i class='fa fa-spinner fa-spin' aria-hidden='true'></i>";
 		var data = new FormData(form);
 		var req = new XMLHttpRequest();
 		req.open('POST', window.location.href);
@@ -30,16 +27,15 @@ if (document.getElementById('form')){
 					console.error('Could not parse JSON!');
 				}
 				if (responseObject) {
-					// console.log(responseObject);
 					setTimeout(function () {
 						handleResponse(responseObject);
-					}, 2000);
+					}, 1800);
 					
 				}
 				setTimeout(function () {
 					document.getElementById("btn-submit").style.pointerEvents = "initial";
 					btn.innerHTML = oldContent;
-				}, 2000);
+				}, 1800);
 			}
 		}
 	req.send(data);

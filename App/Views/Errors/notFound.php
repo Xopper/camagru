@@ -1,1 +1,1 @@
-<h1 style="text-align: center;">OOOOOPs!!</h1>
+<h1>&#128529; 404 &#128529;</h1>

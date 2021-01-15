@@ -43,10 +43,15 @@ class ForgetpassController extends Controller
 			if ($user) {
 				$token = rand_token(60);
 				$userModel->forgetPass($user->id, $token);
-				mail(
-					$this->request->post('email'),
-					'Reset Password',
-					"Hey {$user->username},\n\n to reset your password click here <a href='" . url("/resetpass/{$user->id}/{$token}") . "'>Reset</a>");
+
+				$userModel->sendResetMail($this->request->post('email'), $user->username, $user->id, $token);
+
+				// mail(
+				// 	$this->request->post('email'),
+				// 	'Reset Password',
+				// 	"Hey {$user->username},\n\n to reset your password click here <a href='" . url("/resetpass/{$user->id}/{$token}") . "'>Reset.</a>");
+
+
 				$this->session->set("flash", ["success" => "Rest instructions sent to your email."]);
 				$json = json_encode([
 					'ok' => true,

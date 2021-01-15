@@ -10,56 +10,56 @@ class Upload
 	 * 
 	 * @var array
 	 */
-	private	$file = [];
+	private	$files = [];
 
 	/**
-	 * The uploaded filename
+	 * The uploaded filesname
 	 * 
-	 * @var string
+	 * @var array
 	 */
-	private $fileName;
+	private $filesName = [];
 
 	/**
-	 * The uploaded fileName without extension
+	 * The uploaded filesName without extension
 	 * 
-	 * @var string
+	 * @var array
 	 */
-	private	$nameOnly;
+	private	$namesOnly = [];
 
 	/**
-	 * the uploaded file extension
+	 * the uploaded files extension
 	 * 
-	 * @var string
+	 * @var array
 	 */
-	private $extension;
+	private $extensions = [];
 
 	/**
-	 * The uploaded file mime type
+	 * The uploaded files mime type
 	 * 
-	 * @var string
+	 * @var array
 	 */
-	private $mime;
+	private $mimes = [];
 
 	/**
-	 * The uploaded Temp file path
+	 * The uploaded Temp files path
 	 * 
-	 * @var string
+	 * @var array
 	 */
-	private $tempFile;
+	private $tempFiles = [];
 
 	/**
-	 * File size in bytes
+	 * Files size in bytes
 	 * 
-	 * @var int
+	 * @var array
 	 */
-	private $fileSize;
+	private $filesSize;
 
 	/**
-	 * Uploaded file error
+	 * Uploaded files error
 	 * 
-	 * @var int
+	 * @var array
 	 */
-	private $error;
+	private $errors = [];
 
 	/**
 	 * The allowed image extensions to consider
@@ -67,7 +67,14 @@ class Upload
 	 * 
 	 * @var array
 	 */
-	private $allowedImageExtensions = ['gif', 'jpg', 'jpeg', 'png', 'webp'];
+	private $allowedImageExtensions = ['gif', 'jpg', 'jpeg', 'png', 'wbmp'];
+
+	/**
+	 * Files count
+	 * 
+	 * @var int
+	 */
+	private $filesCount;
 
 	/**
 	 * Constructor
@@ -87,60 +94,58 @@ class Upload
 	 */
 	private function getFileData($input)
 	{
-		// pre($_FILES);
-		if (empty($_FILES[$input])){
-			return;
-		}
-		$this->error = $_FILES[$input]['error'];
+		if (empty($_FILES[$input]))	return ; // End processing upload
 
-		if ($this->error != UPLOAD_ERR_OK){
-			return;
-		}
+		$this->filesCount = count($_FILES[$input]['name']);
 
-		$this->file = $_FILES[$input]; // after checking if there is no error
+		$this->errors = $_FILES[$input]['error'];
 
-		$this->fileName = $this->file['name'];
+		if (!$this->checkErrors()) return ; // End processing upload
 
-		pre(pathinfo($this->fileName));
-		$fileInfo = pathinfo($this->fileName); // get all info about the given file
+		$this->files = $_FILES[$input]; // after checking if there is no error [+] usfull for exists() 
 
-		$this->nameOnly = $fileInfo['filename'];
-		$this->extension = strtolower($fileInfo['extension']);
 
-		$this->tempFile = $this->file['tmp_name'];
-		$this->mime = mime_content_type($this->tempFile);
 
-		$this->fileSize = $this->file['size'];
+
+
+
+
+
+		$this->filesName = $this->files['name'];
+
+		// get all info about the given file
+		// pre(pathinfo($this->fileName));
+		// $fileInfo = pathinfo($this->fileName); 
+
+		$this->setNamesOnly();
+		// $this->extension = strtolower($fileInfo['extension']); // needs help
+		$this->setExtensions();
+
+		$this->tempFiles = $this->files['tmp_name'];
+		// $this->mime = mime_content_type($this->tempFile); // needs hepl
+		$this->setMimesType();
+
+		$this->filesSize = $this->files['size'];
 	}
 
 	/**
-	 * determine if the file exists or not
+	 * determine if the files exist or not
 	 * 
 	 * @return bool
 	 */
 	public function exists()
 	{
-		return !empty($this->file);
+		return !empty($this->files);
 	}
 
 	/**
-	 * Get the file name include the extension
+	 * Get the files name include the extension
 	 * 
 	 * @return string
 	 */
-	public function getFileName()
+	public function getFilesName()
 	{
-		return $this->fileName;
-	}
-
-	/**
-	 * Get the file name only
-	 * 
-	 * @return string
-	 */
-	public function getNameOnly()
-	{
-		return $this->nameOnly;
+		return $this->filesName;
 	}
 
 	/**
@@ -148,9 +153,17 @@ class Upload
 	 * 
 	 * @return string
 	 */
-	public function getExtension()
+	public function getExtensions()
 	{
-		return $this->extension;
+		return $this->extensions;
+	}
+
+	/**
+	 * Get names only
+	 */
+	public function getNamesOnly()
+	{
+		return $this->namesOnly;
 	}
 
 	/**
@@ -158,9 +171,9 @@ class Upload
 	 * 
 	 * @return string
 	 */
-	public function getMimeType()
+	public function getMimesType()
 	{
-		return $this->mime;
+		return $this->mimes;
 	}
 
 	/**
@@ -170,18 +183,91 @@ class Upload
 	 */
 	public function getFileSize()
 	{
-		return $this->fileSize;
+		return $this->filesSize;
 	}
 
 	/**
-	 * determine whether the uploaded file is an image
+	 * Get files count 
+	 * 
+	 * @return int
+	 */
+	public function getFilesCount()
+	{
+		return $this->filesCount;
+	}
+
+	/**
+	 * Check errors
 	 * 
 	 * @return bool
 	 */
-	public function isImage()
+	public function checkErrors()
 	{
-		return strpos($this->getMimeType(), 'image/') === 0 and 
-			   in_array($this->getExtension(), $this->allowedImageExtensions);
+		foreach ($this->errors as $error)
+		{
+			if ($error != UPLOAD_ERR_OK) return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Set mime type to all uploaded files
+	 * 
+	 * @return void
+	 */
+	private function setMimesType()
+	{
+		for ($i = 0; $i < $this->filesCount ; $i++)
+		{
+			$this->mimes[$i] = mime_content_type($this->tempFiles[$i]);
+		}
+	}
+
+	/**
+	 * Set Extension to all uploaded files
+	 * 
+	 * @return void
+	 */
+	private function setExtensions(){
+		for ($i = 0; $i < $this->filesCount ; $i++)
+		{
+			$fileInfo = pathinfo($this->filesName[$i]);
+			$this->extensions[$i] = strtolower($fileInfo['extension']);
+		}
+	}
+
+	/**
+	 * Set NamesOnly to all uploaded files
+	 * 
+	 * @return void
+	 */
+	private function setNamesOnly(){
+		for ($i = 0; $i < $this->filesCount ; $i++)
+		{
+			$fileInfo = pathinfo($this->filesName[$i]);
+			$this->namesOnly[$i] = $fileInfo['filename'];
+		}
+	}
+
+	/**
+	 * determine whether the uploaded filea are all images
+	 * 
+	 * @return bool
+	 */
+	public function isImages()
+	{
+		// inalid contion or ($extension != $this->getExtensions()[$i])
+		for ($i = 0; $i < $this->filesCount ; $i++)
+		{
+			list($type, $extension) = explode("/", $this->getMimesType()[$i]);
+			if (strpos($this->getMimesType()[$i], 'image/') !== 0 or !in_array($this->getExtensions()[$i], $this->allowedImageExtensions)){
+				// echo "Mime type => " . $this->getMimesType()[$i] . "<br />";
+				// echo "Real extension type => " . $this->getExtensions()[$i] . "<br />";
+				// echo "Fake entension type => " . $extension . "<br />";
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -190,18 +276,33 @@ class Upload
 	 * it will be like $file->moveTo($this->file->to("public/images"));
 	 * 
 	 * @param string $target
-	 * @param string $newFileName null by default
-	 * @return string
+	 * @param bool $setRandNames
+	 * @return array
 	 */
-	public function moveTo($target, $newFileName = null)
+	public function moveTo($target, bool $setRandNames = false)
 	{
-		$fileName = $newFileName ?: sha1(mt_rand()) . "_" . sha1(mt_rand()); // total lenght 81 chars
-		$fileName .= "." . $this->getExtension();
+		/**
+		 * mkdir needs some server setup to work properlly
+		 * @link https://stackoverflow.com/questions/5246114/php-mkdir-permission-denied-problem
+		 */
 		if (!is_dir($target)){
 			mkdir($target, 0777, true);
+			chmod($target, 0777);
 		}
-		$uploadedFilePath = $target . "/" . $fileName;
-		move_uploaded_file($this->tempFile, $uploadedFilePath);
-		return $fileName;
+		$extensions = $this->getExtensions();
+		$files = [];
+		for ($i = 0; $i < $this->filesCount ; $i++)
+		{
+			if ($setRandNames){
+				$fileName = sha1(mt_rand()) . "_" . sha1(mt_rand()); // total lenght 81 chars
+				$fileName .= "." . $extensions[$i];
+			}else{
+				$fileName = $this->getFilesName()[$i];
+			}
+			$uploadedFilePath = $target . "/" . $fileName;
+			move_uploaded_file($this->tempFiles[$i], $uploadedFilePath);
+			$files[] = $fileName;
+		}
+		return $files;
 	}
 }

@@ -68,9 +68,9 @@ class UserModel extends Model
 		 * only for rest_token
 		 */
 		if ($field == "reset_token") {
-			$user = $this->select("{$field}")->where("id = ? AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)", $id)->fetch($this->table);
+			$user = $this->select("{$field}")->where("`id` = ? AND `reset_at` > DATE_SUB(NOW(), INTERVAL 30 MINUTE)", $id)->fetch($this->table);
 		} else {
-			$user = $this->select("{$field}")->where("id = ?", $id)->fetch($this->table);
+			$user = $this->select("{$field}")->where("`id` = ?", $id)->fetch($this->table);
 		}
 		if ($user->{$field} == $token) {
 			return true;
@@ -99,7 +99,7 @@ class UserModel extends Model
 	 */
 	public function validateLog($username, $password)
 	{
-		$user = $this->select("*")->where("username = ? AND confirmed_at IS NOT NULL", $username)->fetch("users");
+		$user = $this->select("*")->where("`username` = ? AND `confirmed_at` IS NOT NULL", $username)->fetch("users");
 		if ($user) {
 			if (password_verify($password, $user->password)) {
 				return $user;
@@ -132,7 +132,7 @@ class UserModel extends Model
 	}
 	public function emailExists($email)
 	{
-		$user = $this->select("*")->where("email = ? AND confirmed_at IS NOT NULL", $email)->fetch($this->table);
+		$user = $this->select("*")->where("`email` = ? AND `confirmed_at` IS NOT NULL", $email)->fetch($this->table);
 		$rowCount = $this->rows();
 		if ($rowCount) {
 			return $user;
@@ -141,15 +141,15 @@ class UserModel extends Model
 	}
 	public function forgetPass($id, $token)
 	{
-		$this->query("UPDATE users SET `reset_token` = ? , `reset_at` = NOW() WHERE id = ?", $token, $id);
+		$this->query("UPDATE `users` SET `reset_token` = ? , `reset_at` = NOW() WHERE id = ?", $token, $id);
 	}
 	public function unsetToken($id)
 	{
-		$this->query("UPDATE users SET `reset_token` = NULL , `reset_at` = NULL WHERE id = ?", $id);
+		$this->query("UPDATE `users` SET `reset_token` = NULL , `reset_at` = NULL WHERE id = ?", $id);
 	}
 	public function rememberUser($id)
 	{
-		$user = $this->select("*")->where("id = ? AND remember_token IS NOT NULL", $id)->fetch($this->table);
+		$user = $this->select("*")->where("`id` = ? AND `remember_token` IS NOT NULL", $id)->fetch($this->table);
 		if ($this->rows() != 0) {
 			return $user;
 		}
@@ -161,8 +161,14 @@ class UserModel extends Model
 	}
 	public function unsetCookieOnDB($id)
 	{
-		$this->query("UPDATE users SET `remember_token` = NULL WHERE id = ?", $id);
+		$this->query("UPDATE `users` SET `remember_token` = NULL WHERE id = ?", $id);
 	}
+
+	/**
+	 * Reconnect using Cookies
+	 * 
+	 * @return void
+	 */
 	public function reconnectFromCookie()
 	{
 		if ($this->cookie->has("remember")) {
@@ -183,9 +189,70 @@ class UserModel extends Model
 					$this->url->redirect("/");
 				}
 			} else {
-				$this->cookie->romove("remember");
+				$this->cookie->remove("remember");
 				$this->url->redirect("/");
 			}
 		}
+	}
+
+	/**
+	 * Send confirmation mail
+	 * 
+	 * @param string $to
+	 * @param string $username
+	 * @param int $userId
+	 * @param string $token
+	 * 
+	 * @return void
+	 */
+	public function sendConfMail($to, $username, $userId, $token){
+		$headers[] = 'MIME-Version: 1.0';
+		$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+		mail(
+			$to,
+			'Confirm your registration',
+			"Hey {$username},\n\n Gratz for passing this step \n\n you can verify your account now click here <a href='" . url("/confirm/{$userId}/{$token}") . "'>Verify</a>",
+			implode("\r\n", $headers)
+		);
+	}
+
+	/**
+	 * Send reset user credentials mail
+	 * 
+	 * @param string $to
+	 * @param string $username
+	 * @param int $userId
+	 * @param string $token
+	 * 
+	 * @return void
+	 */
+	public function sendResetMail($to, $username, $userId, $token){
+		$headers[] = 'MIME-Version: 1.0';
+		$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+		mail(
+			$to,
+			'Reset Password',
+			"Hey {$username},\n\n to reset your password click here <a href='" . url("/resetpass/{$userId}/{$token}") . "'>Reset.</a>",
+			implode("\r\n", $headers)
+		);
+	}
+
+	/**
+	 * Send confirmation mail
+	 * 
+	 * @param string $to
+	 * @param string $username
+	 * 
+	 * @return void
+	 */
+	public function sendNotification($to, $username){
+		$headers[] = 'MIME-Version: 1.0';
+		$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+		mail(
+			$to,
+			'You got new comment!',
+			"Hey {$username},\n\n Someone has commented on your photo.",
+			implode("\r\n", $headers)
+		);
 	}
 }

@@ -49,8 +49,27 @@ body{
 	/* background-color: #272728; */
 }
 
+
+.preload * {
+	transition: none !important;
+	animation: none !important;
+	-webkit-transition: none !important;
+	-moz-transition: none !important;
+	-ms-transition: none !important;
+	-o-transition: none !important;
+	-webkit-animation: none !important;
+	-moz-animation: none !important;
+	-ms-animation: none !important;
+	-o-animation: none !important;
+}
+
+.resize-animation-stopper * {
+	animation: none !important;
+	transition: none !important;
+}
+
 .container {
-	max-width: 1000px;
+	max-width: 1140px;
 	/* background-color: rgba(255, 255, 255, 0.5); */
     margin: auto;
 	display: flex;
@@ -174,15 +193,28 @@ a.username {
 	border: none;
 	border-radius: 50px;
 	cursor: pointer;
-	/* transition: all 0.3s ease 0s; */
+	transition: all 0.25s ease;
 }
-.btn:hover {
-	transition: all 0.3s ease-in;
-    background-color: #009D82;
-    outline: none;
+
+.btn-not-primary {
+	background: url("../imgs/funky-lines.png") repeat;
+	color: #009D82;
 }
+
 .btn:focus {
 	outline: none;
+}
+
+.btn:hover, .btn-primary:hover {
+    outline: none;
+	background: url("../imgs/funky-lines.png") repeat;
+	color: #18B69B;
+}
+
+.btn-not-primary:hover {
+	outline: none;
+	background: #18B69B;
+	color: #FFF;
 }
 
 /*
@@ -197,6 +229,14 @@ main {
     flex-direction: column;
     align-items: center;
 }
+
+hr {
+	width: 90%;
+	margin: 1rem auto;
+	border: 0;
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 
 .article{
     padding-top: 3em;
@@ -398,7 +438,8 @@ signature
 /* Grid System diyalooo */
 
 .columns {
-    display: flex;
+	display: flex;
+	width: 100%;
 }
 
 .columns:nth-child(1){
@@ -478,12 +519,157 @@ signature
 }
 
 
+
 /*
 
 resopnsive start from 7.25
 
 */
 
+@media screen and (max-width: 1140px) {
+	.drop-zone {
+		width: 200px!important;
+   		height: 200px!important;
+	}
+	.box {
+		flex-direction: column;
+	}
+	.cpanel {
+		flex-direction: row!important;
+		justify-content: space-around!important;
+		height: 70px!important;
+	}
+	.selected-from-upload, .selected-saved-from-upload {
+		width: 250px!important;
+		height: 200px!important;
+		position: absolute!important;
+		left: 0px;
+		background: rebeccapurple!important;
+	}
+	.canvas-parent{
+		height: 300px!important;
+		width: 75%;
+	}
+
+	.videoElement {
+		left: 0px!important;
+		top: 0px!important;
+	}
+	.selected-from-upload {
+		width: 100%!important;
+		height: 77%;
+		margin: 10% 0 0 0;
+		/* margin: 0 175px; */
+		left: 0px!important;
+		top: 0px!important;
+	}
+	#videoElement {
+		width: 400px!important;
+		height: 300px!important;
+		/* margin: 10% 0 0 0; */
+		margin: 0 125px;
+	}
+	.column.is-6 {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		height: 400px;
+	}
+	.citems {
+		padding-bottom: 0px!important;
+	}
+	.column.is-4 {
+		width: 100%!important;
+		flex: none;
+	}
+	.uploaded {
+		max-height: 340px;
+		overflow: auto;
+		max-width: 100%!important;
+	}
+	#upload {
+		max-width: 100%!important;
+		max-height: 343px;
+		margin-top: 15px;
+	}
+	.canvas-sticker {
+		position: absolute;
+		height: 70px!important;
+		z-index: 2;
+		top: 100px!important;
+		left: 23vw !important;
+		visibility: hidden;
+	}
+	.column.is-2 {
+		width: 100%!important;
+		flex: none;
+	}
+	.canvas-parent-output{
+		height: 280px!important;
+		width: 75%;
+	}
+	.selected-canvas-sticker {
+		position: absolute;
+		height: 70px!important;
+		z-index: 2;
+		top: 85!important;
+		left: 15vw !important;
+		visibility: hidden;
+	}
+	.selected-saved-from-upload {
+		width: 100%!important;
+		height: 77%;
+		margin: 10% 0 0 0;
+		left: 0px!important;
+		top: 0px!important;
+	}
+	#canvasHolder {
+		width: 100%!important;
+		height: 77%;
+		margin: 10% 0 0 0;
+		left: 0px!important;
+		top: 0px!important;
+	}
+	.final-img {
+		width: 225px!important;
+		height: inherit;
+	}
+	.fa-trash-o:before {
+		content: "\f014";
+		position: absolute;
+		top: 85px;
+		right: 10px;
+		font-size: 17px;
+	}
+	.loaded-list {
+		background: crimson!important;
+		width: 256px;
+	}
+	.column.is-10 {
+		width: 100%!important;
+		flex: none;
+	}
+	.stickers-container {
+		max-width: 65vw!important;
+		/* width: 100%!important; */
+		display: flex; 
+	}
+	#loaded{
+		border: none;
+		margin: 0 auto;
+		width: 100%;
+	}
+	.loaded {
+		max-width: 100%!important;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.uploaded-imgs {
+		display: flex;
+    	flex-direction: column;
+	}
+}
 @media screen and (max-width: 701px) {
 	.form {
 		min-width: 340px;
@@ -496,25 +682,25 @@ resopnsive start from 7.25
 	}
 	.nav__links {
 		position: fixed;
-		background: #a72443;
-		height: 100vh;
+		background: #008368;
+		height: 100%;
 		width: 100%;
 		top: 0;
 		right: 0;
 		margin: 0;
-		z-index: 1;
+		z-index: 10;
 		flex-direction: column;
 		align-items: center;
 		justify-content: space-around;
 		/* clip-path isn't supported in FF-41 so I replce it with */
 		/* clip-path: circle(30px at 110% -10%);
 		-webkit-clip-path: circle(30px at 110% -10%); */
-		/* transition: all 0.3s ease-out; */
+		transition: all 0.3s ease-out;
 		opacity: 0;
 		pointer-events: none;
 	}
 	.nav__links li a:hover {
-		color: rgba(0, 0, 0, .84);
+		color: rgb(0, 0, 0);
 	}
 	.nav__links.open {
 		/* clip-path: circle(1300px at 110% -10%);
@@ -534,6 +720,20 @@ resopnsive start from 7.25
 	.form-control small {
     	bottom: 4px;
 		font-size: 10px;
+	}
+	.img-card {
+		max-width: 340px;
+	}
+	.img-wrapper img {
+		max-width: 275px!important;
+	}
+	#videoElement {
+		width: 100%!important;
+		height: 77%;
+		margin: 10% 0 0 0;
+	}
+	.empty-uploaded-list p {
+		margin-top: 100px;
 	}
 }
 
@@ -563,9 +763,9 @@ problem kaybda f 345 px
 
 */
 
-/* @media screen and (max-width: 701px) {
+@media screen and (max-width: 320px) {
 	.form {
-		min-width: 340px;
+		min-width: 315px;
 	}
 	.auth {
 		display:none;
@@ -575,22 +775,33 @@ problem kaybda f 345 px
 	}
 	.nav__links {
 		position: fixed;
-		background: #a72443;
-		height: 100vh;
+		background: #008368;
+		height: 100%;
 		width: 100%;
 		top: 0;
 		right: 0;
 		margin: 0;
-		z-index: 1;
+		z-index: 10;
 		flex-direction: column;
 		align-items: center;
 		justify-content: space-around;
-		clip-path: circle(1200px at 90% -10%);
-		-webkit-clip-path: circle(1200px at 90% -10%);
-		display: none; 
-		transition: all 1s ease-in-out;
+		/* clip-path isn't supported in FF-41 so I replce it with */
+		/* clip-path: circle(30px at 110% -10%);
+		-webkit-clip-path: circle(30px at 110% -10%); */
+		transition: all 0.3s ease-out;
+		opacity: 0;
+		pointer-events: none;
 	}
-	.nav
+	.nav__links li a:hover {
+		color: rgb(0, 0, 0);
+	}
+	.nav__links.open {
+		/* clip-path: circle(1300px at 110% -10%);
+		-webkit-clip-path: circle(1450px at 110% -10%); */
+		transition: all 0.3s ease-in;
+		opacity: 1;
+		pointer-events: all;
+	}
 	.nav__links .none-primary {
 		display: block;
 	}
@@ -599,8 +810,26 @@ problem kaybda f 345 px
 		cursor: pointer;
 		z-index: 100;
 	}
+	.form-control small {
+    	bottom: 4px;
+		font-size: 10px;
+	}
+	.img-card {
+		max-width: 315px;
+	}
+	.img-wrapper img {
+		max-width: 275px!important;
+	}
+	#videoElement {
+		width: 100%!important;
+		height: 77%;
+		margin: 10% 0 0 0;
+	}
+	.empty-uploaded-list p {
+		margin-top: 100px;
+	}
 } 
-*/
+
 
 
 .flash {
@@ -628,3 +857,499 @@ problem kaybda f 345 px
     border-color: #48c774;
     color: #257942;
 }
+
+/* Custom checkbox  */
+
+.custom-checkbox{
+	cursor: pointer;
+}
+
+.custom-checkbox input[type="checkbox"] {
+	display: none;
+}
+
+.custom-checkbox input[type="checkbox"] + .label-text:before {
+	font-family: 'FontAwesome';
+	content: "\f096";
+	color: #008368;
+	width: 1em;
+	display: inline-block;
+	margin-right: 2px;
+}
+.custom-checkbox input[type="checkbox"]:checked + .label-text:before {
+	content: "\f14a";
+	animation: tick 150ms ease-in;
+}
+
+@keyframes tick {
+	0% {transform: scale(0);}
+	90% {transform: scale(1.5);}
+	100% {transform: scale(1);}
+}
+
+
+/*
+*	All about Camera UI
+*/
+
+.box {
+	width: 95%;
+	/* padding: 20px; */
+	/* border: 1px solid #cecece; */
+	background: rgba(255, 255, 255, 0.95);
+	/* background: #272728; */
+	border-radius: 25px;
+}
+
+
+.drop-zone {
+    width: 300px;
+    height: 300px;
+    margin: 57px auto;
+	border: 2px dashed #ccc;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    /* line-height: 300px;
+    text-align: center; */
+    color: #009D82;
+    background: url(../imgs/funky-lines.png) repeat;
+	border-radius: 150px;
+	cursor: pointer;
+}
+.drop-zone h1 {
+	margin: 0px;
+	/* color: #FFF; */
+}
+
+.drop-zone.dragover{
+	border-color: #000;
+	color: #000;
+	content: "";
+}
+
+.drop-zone__input, .drop-zone__reset {
+	display: none;
+}
+
+.scroll-out {
+    margin: 45px 0px;
+    padding: 120px 0;
+    text-align: center;
+}
+
+.scroll-out-text {
+	padding: 1em 0;
+	color: #272728;
+	font-weight: 600;
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+}
+
+.canvas-parent {
+	position: relative;
+    height: 100%;
+    /* background: rebeccapurple; */
+}
+
+.canvas-parent-output {
+	position: relative;
+}
+
+.videoElement {
+	opacity: .5;
+	position: absolute;
+	top: 20px;
+	/* left: 40px!important; */
+	left: 40px;
+}
+
+#canvasHolder {
+	opacity: .5;
+	position: absolute;
+	top: 20px;
+	left: 40px;
+}
+.selected-canvas-sticker {
+	position: absolute;
+	top: 20px;
+	height: 100px;
+	z-index: 100;
+	top: 71px!important;
+	left: 77px !important;
+	visibility: hidden;
+}
+
+.uploaded {
+    max-height: 340px;
+    overflow: auto;
+    max-width: 343px;
+}
+
+.loaded {
+    height: 343px;
+    overflow: auto;
+	max-width: 343px;
+	background: #f3f3f4;
+}
+#loaded {
+	border-left: 1px solid #CeCeCe;
+	height: 343px;
+}
+
+.loaded-list {
+	position: relative;
+    display: block;
+    margin: 10px 15px;
+	list-style: none;
+	cursor: pointer;
+    color: #000;
+	background: url(../imgs/funky-lines.png) repeat;
+	font-weight: 600;
+	/* limit text lenght to the with*/
+	/* width: inherit; */
+	height: 190px;
+    overflow: hidden;
+    white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.loaded-list:hover{
+	background: crimson;
+}
+
+.uploaded-list {
+	position: relative;
+    display: block;
+    padding: 10px 15px;
+	list-style: none;
+	cursor: pointer;
+    color: #000;
+	background: url(../imgs/funky-lines.png) repeat;
+	font-weight: 600;
+	/* limit text lenght to the with*/
+	width: inherit;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.uploaded-list:hover {
+	border-left: 2px solid #009D82;
+	background: #eeeeee;
+}
+
+.cpanel {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	height: 100%;
+	color: #18B69B;
+	flex-direction: column;
+	height: 340px;
+}
+.citems {
+	padding-bottom: 20px;
+	cursor: pointer;
+}
+.citems:hover {
+	color: #1d1e20;
+}
+
+.stickers {
+	display: flex;
+}
+.stickers-container{
+	/* max-width: 70vw; */
+	width: 100%;
+    overflow: auto;
+    margin: 0 auto;
+}
+
+.images {
+	height: 66px;
+}
+
+.canvas-sticker {
+	position: absolute;
+	height: 100px;
+    /* width: 100px; */
+    /* position: relative; */
+    z-index: 2;
+	/* top: -20px; */
+	/* left: 100px; */
+	top: 71px;
+    left: 77px;
+	visibility: hidden;
+}
+
+#upload {
+	max-width: 343px
+}
+
+.empty-uploaded-list, .empty-loaded-list {
+	height: 100%;
+}
+
+.empty-uploaded-list p {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 343px;
+	color: #000;
+	font-weight: 600;
+}
+.empty-loaded-list p {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+	color: #000;
+	font-weight: 600;
+}
+
+.selected-from-upload {
+	width: 400px;
+	height: 300px;
+	position: absolute;
+	top: 20px;
+	left: 40px;
+	visibility: hidden;
+}
+
+.selected-saved-from-upload {
+	width: 400px;
+	height: 300px;
+	/* background: ; */
+	position: absolute;
+	left: 0px;
+	/* right: 50px; */
+	/* background: mediumblue; */
+	visibility: hidden;
+}
+
+.selected-saved-from-upload {
+	left: 40px;
+    top: 20px;
+}
+
+.breathing-room {
+	height: 13px; /* 37 */
+}
+
+#canvas {
+	display: none;
+}
+
+#canvasHolder {
+	visibility: hidden;
+}
+
+.final-img {
+	width: 253px;
+    height: inherit;
+}
+
+.fa-trash-o:before {
+    content: "\f014";
+    position: absolute;
+    top: 75px;
+    right: 10px;
+}
+
+.img-card {
+	background-color: #272728;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    width: 480px;
+    padding: 20px 30px;
+    margin: 30px 40px;
+}
+
+.post-sep {
+	width: 100%;
+}
+
+.reaction {
+	padding: 0 10px;
+	display: flex;
+	align-items: flex-start;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.img-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	/* max-height: 300px; */
+}
+.img-wrapper img {
+	max-width: 400px;
+}
+
+.fa-thumbs-up:before {
+    content: "\f164";
+    cursor: pointer;
+}
+.fa-thumbs-up.liked {
+	content: "\f164";
+	color: #18B69B;
+    cursor: pointer;
+}
+
+.fa-commenting:before {
+    content: "\f27a";
+	margin-left: 12px;
+	cursor: pointer;
+}
+
+.counters {
+	flex-basis: 50%;
+    display: flex;
+    justify-content: flex-end;
+	font-size: 12px;
+	margin-top: 5px;
+}
+
+div.counters p:first-child {
+	margin-right: 5px;
+}
+
+.actions {
+	flex-basis: 50%;
+}
+.comment-section {
+	margin-top: 16px;
+    display: flex;
+    width: 100%;
+    display: flex;
+    width: 100%;
+}
+.comment-input {
+	flex-basis: 90%;
+	background-color: #f3f3f4;
+	display: block;
+	border: none;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+	font-family: "Nunito", sans-serif;
+	border-top-left-radius: 13px;
+    border-bottom-left-radius: 13px;
+}
+.comment-input:focus {
+	outline: none;
+}
+
+.comment-send {
+	flex-basis: 10%;
+	width: 37px;
+	background: #008368;
+	border: none;
+	border-top-right-radius: 13px;
+	border-bottom-right-radius: 13px;
+}
+
+.comment-send:hover {
+	cursor: pointer;
+}
+
+.comment-send:focus {
+	outline: none;
+}
+
+.comments-load {
+	display: flex;
+	flex-direction: column;
+}
+
+.comment-card {
+	display: flex;
+}
+
+.comment-card h6 {
+	align-self: flex-start;
+	color: #008368;
+	font-size: 12px;
+}
+
+.comment-card p {
+	font-weight: 400;
+	font-size: 12px;
+	padding-left: 6px;
+	flex-basis: 90%;
+	font-size: 12px;
+	word-wrap: break-word;
+	hyphens: auto;
+	width: 0px;
+}
+.comment-card:not(:last-child) {
+	margin-bottom: 6px;
+}
+
+#pagination {
+    display: flex;
+    padding: 50px;
+    justify-content: center;
+}
+.page {
+	padding: 10px;
+    background-color: #038368;
+    color: #FFF;
+    border-radius: 8px;
+    font-size: 13px;
+    margin: 2px;
+    font-weight: 700;
+}
+
+a.page {
+	font-style: normal;
+	text-decoration: none;
+}
+
+a.page.active {
+	background: url(../imgs/funky-lines.png) repeat;
+	color: #008368;
+}
+.delete {
+	font-size: 12px;
+    display: flex;
+}
+
+.delete .fa-trash:before {
+	content: "\f1f8";
+	cursor: pointer;
+	color: crimson;
+}
+
+.empty-gallery {
+	margin-top: 27vh;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.first-entry {
+	padding-top: 113px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+
+.entry-header {
+	font-size: 36px;
+    font-weight: 700;
+    color: aquamarine;
+}
+
+.entry-content {
+	padding-top: 25px;
+    font-size: 18px;
+    font-weight: 600;
+}
+

@@ -76,11 +76,11 @@ class AccountController extends Controller
 	protected function rules():array
 	{
 		return [
-			'fName'			=> 'required|validName|max:10',
-			'lName'			=> 'required|validName|max:10',
-			'username'		=> 'required|alphanum|max:12|unique:users',
+			'fName'			=> 'required|validName|min:3|max:10',
+			'lName'			=> 'required|validName|min:3|max:10',
+			'username'		=> 'required|alphanum|min:3|max:12|unique:users',
 			'email'			=> 'required|max:63|email|unique:users',
-			'password'		=> 'required|max:32|validPassword',
+			'password'		=> 'required|min:8|validPassword',
 		];
 	}
 
@@ -99,11 +99,15 @@ class AccountController extends Controller
 			'fName.validName'			=> 'Please insert a valid name.',
 			'lName.validName'			=> 'Please insert a valid name.',
 
-			'fName.max'					=> 'Fisrt name must be less than 10 characters.',
-			'lName.max'					=> 'Last name must be less than 10 characters.',
-			'username.max'				=> 'Username must be less than 12 characters.',
-			'email.max'					=> 'A valid email must be less than 63 characters.',
-			'password.max'				=> 'Invalid password.',
+			'fName.max'					=> 'Fisrt name must be less than or equal to 10 characters.',
+			'lName.max'					=> 'Last name must be less than or equal to 10 characters.',
+			'username.max'				=> 'Username must be less than or equal to 12 characters.',
+			'email.max'					=> 'A valid email must be less than or equal to 63 characters.',
+			
+			'fName.min'					=> 'Fisrt name must be at least 3 characters.',
+			'lName.min'					=> 'Last name must be at least 3 characters.',
+			'username.min'				=> 'Username must be at least 3 characters.',
+			'password.min'				=> 'Username must be at least 8 characters.',
 			
 			'email.email'				=> 'Please insert a valid email.',
 			'username.alphanum'			=> 'Use alphanumeric chars.',

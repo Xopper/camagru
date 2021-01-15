@@ -10,6 +10,7 @@ class Setup
 {
 	/**
 	 * @var \PDO
+	 * @link https://stackoverflow.com/a/32911188 
 	 */
 	private static $pdo;
 
@@ -27,13 +28,9 @@ class Setup
 	private function init($dbname)
 	{
 		require __DIR__ . "/database.php";
-		echo "This is from Setup <br/>";
-		if ($this->isExists($DB_HOST, $dbname, $DB_USER, $DB_PASS))
+		if (!$this->isExists($DB_HOST, $dbname, $DB_USER, $DB_PASS))
 		{
-			die("1");
-		} else {
 			$this->setup();
-			die("O");
 		}
 	}
 
@@ -93,6 +90,102 @@ class Setup
 		/**
 		 * Create all tables needed for camagru
 		 */
+
+		/**
+		 * Table structure for table `comments`
+		 */
+		self::$pdo->exec("CREATE TABLE `comments` (
+			`id` int(11) NOT NULL,
+			`user_id` int(11) NOT NULL,
+			`image_id` int(11) NOT NULL,
+			`comment` text NOT NULL,
+			`created_at` datetime NOT NULL
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 		
+		/**
+		 * Table structure for table `images`
+		 */
+		self::$pdo->exec("CREATE TABLE `images` (
+			`id` int(11) NOT NULL,
+			`image_name` varchar(255) NOT NULL,
+			`user_id` int(11) NOT NULL,
+			`created_at` datetime NOT NULL
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+		
+		/**
+		 * Table structure for table `likes`
+		 */
+		self::$pdo->exec("CREATE TABLE `likes` (
+			`id` int(11) NOT NULL,
+			`user_id` int(11) NOT NULL,
+			`image_id` int(11) NOT NULL
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+		/**
+		 * Table structure for table `users`
+		 */
+		self::$pdo->exec("CREATE TABLE `users` (
+			`id` int(11) NOT NULL,
+			`firstName` varchar(255) NOT NULL,
+			`lastName` varchar(255) NOT NULL,
+			`username` varchar(255) NOT NULL,
+			`password` varchar(255) NOT NULL,
+			`email` varchar(255) NOT NULL,
+			`confirmation_token` varchar(60) DEFAULT NULL,
+			`confirmed_at` datetime DEFAULT NULL,
+			`notification_on` tinyint(1) NOT NULL,
+			`reset_token` varchar(60) DEFAULT NULL,
+			`reset_at` datetime DEFAULT NULL,
+			`remember_token` varchar(255) DEFAULT NULL
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+		
+		/**
+		 * Indexes for dumped tables
+		 */
+
+
+		/**
+		 * Indexes for table `comments`
+		 */
+		self::$pdo->exec("ALTER TABLE `comments` ADD PRIMARY KEY (`id`);");
+
+		/**
+		 * Indexes for table `images`
+		 */
+		self::$pdo->exec("ALTER TABLE `images` ADD PRIMARY KEY (`id`);");
+
+		/**
+		 * Indexes for table `likes`
+		 */
+		self::$pdo->exec("ALTER TABLE `likes` ADD PRIMARY KEY (`id`);");
+
+		/**
+		 * Indexes for table `users`
+		 */
+		self::$pdo->exec("ALTER TABLE `users` ADD PRIMARY KEY (`id`);");
+
+		/**
+		 * AUTO_INCREMENT for dumped tables
+		 */
+
+		/**
+		 * AUTO_INCREMENT for table `comments`
+		 */
+		self::$pdo->exec("ALTER TABLE `comments` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
+
+		/**
+		 * AUTO_INCREMENT for table `images`
+		 */
+		self::$pdo->exec("ALTER TABLE `images` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
+
+		/**
+		 * AUTO_INCREMENT for table `likes`
+		 */
+		self::$pdo->exec("ALTER TABLE `likes` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
+
+		/**
+		 * AUTO_INCREMENT for table `users`
+		 */
+		self::$pdo->exec("ALTER TABLE `users` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT; COMMIT;");
 	}
 }

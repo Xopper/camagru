@@ -82,15 +82,15 @@ if (!function_exists('redirectTo')) {
 
 if (!function_exists('rand_token')) {
 	/**
-	 * get full link of pag
+	 * Generate a random token with specific length
 	 * 
-	 * @param int $lenght lenght of the genarated token
+	 * @param int $length length of the genarated token
 	 * @return string
 	 */
-	function rand_token($lenght)
+	function rand_token($length)
 	{
 		$alpha = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789";
-		return substr(str_shuffle(str_repeat($alpha, $lenght)), 0, $lenght);
+		return substr(str_shuffle(str_repeat($alpha, $length)), 0, $length);
 	}
 }
 

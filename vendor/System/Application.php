@@ -14,13 +14,10 @@ class Application
 	private function __construct(File $file)
 	{
 		$this->share('file', $file);
-		//$this->file->Hi();
-		//var_dump($container);
 		$this->registerClasses();
-		//$this->file->hi();
 		$this->loadHelpers();
-		//echo "App Constaructor is working";
 	}
+
 	/**
 	 * Singletons should not be cloneable.
 	 */
@@ -43,25 +40,28 @@ class Application
 	public function run()
 	{
 		require __DIR__ . "/Config/database.php";
-		// die(__DIR__);
-		/**
-		 * just for testing purpose
-		 */
-		// die($DB_NAME);
-
-		// new Setup($DB_NAME);
-		// new Setup("TOTO");
-
-
+		
 		$this->session->start();
+
+		$upsFile = __DIR__ . "/../../public/ups";
+		$useRpics = __DIR__ . "/../../public/userpics";
+
+		if (!is_dir($upsFile)){
+			mkdir($upsFile);
+			chmod($upsFile, 0777); 
+		}
+
+		if (!is_dir($useRpics)){
+			mkdir($useRpics);
+			chmod($useRpics, 0777); 
+		} 
+
+		new Setup($DB_NAME);
+		
 		$this->request->prepareUrl();
 		$this->file->call('App/index.php');
 		list($controller, $method, $args) = $this->route->getProperRoute();
-		// pre($this->route->getProperRoute());
-		// die();
 		$this->load->action($controller, $method, $args);
-		// $route = $this->route->getProperRoute();
-		// pre($obj);
 	}
 
 	/**
@@ -105,7 +105,6 @@ class Application
 	private function coreClasses()
 	{
 		return [
-			// 'init'			=> '\\System\\Config\\Setup',
 			'request'		=> '\\System\\Http\\Request',
 			'response'		=> '\\System\\Http\\Response',
 			'view'			=> '\\System\\View\\ViewFactory',
@@ -128,8 +127,6 @@ class Application
 
 	private function isCoreAlias($alias)
 	{
-		// $coreClasses = $this->coreClasses();
-		// return isset($coreClasses[$alias]);
 		return array_key_exists($alias, $this->coreClasses());
 	}
 

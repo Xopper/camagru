@@ -67,8 +67,8 @@ class ResetController extends Controller
 	protected function rules(): array
 	{
 		return [
-			'Npassword'		=> 'required|max:32|validPassword',
-			'conf-Npass'	=> 'required|same:Npassword',
+			'Npassword'		=> 'required|min:8|validPassword',
+			'conf-Npass'	=> 'required|min:8|validPassword|same:Npassword',
 		];
 	}
 
@@ -79,10 +79,12 @@ class ResetController extends Controller
 	{
 		return [
 			'Npassword.required'		=> 'Please fill out this field.',
-			'Npassword.max'				=> 'Password must be less than 32 characters.',
+			'Npassword.min'				=> 'Password must be at least 8 characters.',
 			'Npassword.validPassword'	=> 'Use [lower-Upper] case, special chars and numbers.',
 
 			'conf-Npass.required'		=> 'Please fill out this field.',
+			'conf-Npass.min'			=> 'Password must be at least 8 characters.',
+			'conf-Npass.validPassword'	=> 'Use [lower-Upper] case, special chars and numbers.',
 			'conf-Npass.same'			=> 'Please confirm your password correctly.',
 		];
 	}

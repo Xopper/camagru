@@ -2,20 +2,11 @@
 
 namespace App;
 
-// White list routes
 use \System\Application;
 
 $app = Application::getInstance();
 
 $app->route->add('/', 'Home');
-
-// blog post Route exemple
-// /posts/my-first-title/121;
-$app->route->add('/submit', 'Home@submit', 'post');
-$app->route->add('/posts/:text/:id', 'Posts\\Post@index', 'post');
-$app->route->add('/posts/:text/:id', 'Posts/Post', 'put');
-$app->route->add('/posts/:text/:id', 'Posts/Post', 'GET');
-
 
 $app->route->add('/register', 'Auth/Register');
 $app->route->add('/register', 'Auth/Register@submit', 'POST');
@@ -39,11 +30,20 @@ $app->route->add('/forgetpass', 'Auth/Forgetpass@submit', 'POST');
 $app->route->add('/instagru', 'Insta/Instagru');
 $app->route->add('/instagru', 'Insta/Instagru@submit', 'POST');
 
+$app->route->add('/saveimg', 'Insta/SaveImg@submit', 'POST');
+$app->route->add('/getUserimages', 'Insta/GetImages@submit', 'POST');
+$app->route->add('/deleteselectedimage', 'Insta/deleteSelectedImage@submit', 'POST');
+
+$app->route->add('/gallery', 'Gallery/Gallery');
+$app->route->add('/gallery/page-:id', 'Gallery/Gallery');
+
+$app->route->add('/deletecomment', 'Gallery/DeleteComment@delete', 'POST');
+$app->route->add('/setlike', 'Gallery/SetLike@set', 'POST');
+$app->route->add('/sendcomment', 'Gallery/SendComment@send', 'POST');
+
 $app->route->add('/resetpass/:id/:token', 'Auth/Reset');
 $app->route->add('/resetpass/:id/:token', 'Auth/Reset@submit', 'POST');
 
-$app->route->add('/test', 'Test');
-$app->route->add('/test', 'Test@submit', "POST");
 
 $app->share('CommonLayout', function ($app) {
 	return $app->load->controller('Common/Layout');

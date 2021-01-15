@@ -10,6 +10,8 @@
 			name="fName"
 			placeholder="enter your first name"
 			required
+			minlength="3"
+			maxlength="10"
 		/>
 		<small id="_fName">Error msg here</small>
 	</div>
@@ -23,6 +25,8 @@
 			name="lName"
 			placeholder="enter your last name"
 			required
+			minlength="3"
+			maxlength="10"
 		/>
 		<small id="_lName">Error msg here</small>
 	</div>
@@ -36,6 +40,8 @@
 			name="username"
 			placeholder="enter your username"
 			required
+			minlength="3"
+			maxlength="12"
 		/>
 		<small id="_username">Error msg here</small>
 	</div>
@@ -44,11 +50,12 @@
 		<label for="email">Email</label>
 		<input
 			autocomplete="off"
-			type="text"
+			type="email"
 			id="email"
 			name="email"
 			placeholder="enter a valid email"
 			required
+			maxlength="63"
 		/>
 		<small id="_email">Error msg here</small>
 	</div>
@@ -62,6 +69,7 @@
 			name="password"
 			placeholder="enter a valid password"
 			required
+			minlength="8"
 		/>
 		<small id="_password">Error msg here</small>
 	</div>
@@ -75,6 +83,7 @@
 			name="conf-pass"
 			placeholder="confirm your password"
 			required
+			minlength="8"
 		/>
 		<small id="_conf-pass">Error msg here</small>
 	</div>

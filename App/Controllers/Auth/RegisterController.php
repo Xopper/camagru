@@ -39,8 +39,8 @@ class RegisterController extends Controller
 		$CSRFflag = $this->csrf->checkToken();
 		if (empty($errors) && $CSRFflag) {
 			$token = rand_token(60);
-			$users = $this->load->model("User");
-			$users->addUser(
+			$userModel = $this->load->model("User");
+			$userModel->addUser(
 				$this->request->post('fName'),
 				$this->request->post('lName'),
 				$this->request->post('username'),
@@ -49,10 +49,7 @@ class RegisterController extends Controller
 				$token
 			);
 			$userId = $this->db->lastId();
-			mail(
-				$this->request->post('email'),
-				'Confirm your registration',
-				"Hey {$this->request->post('username')},\n\n Gratz for passing this step \n\n you can verify your account now click here <a href='" . url("/confirm/{$userId}/{$token}") . "'>Verify</a>");
+			$userModel->sendConfMail($this->request->post('email'), $this->request->post('username'), $userId, $token);
 			$this->session->set('flash', ['success' => 'Check your inbox mail.']);
 			$json = json_encode([
 				'ok' => true,
@@ -72,12 +69,12 @@ class RegisterController extends Controller
 	protected function rules():array
 	{
 		return [
-			'fName'		=> 'required|validName|max:10',
-			'lName'		=> 'required|validName|max:10',
-			'username'	=> 'required|alphanum|max:12|unique:users',
+			'fName'		=> 'required|validName|min:3|max:10',
+			'lName'		=> 'required|validName|min:3|max:10',
+			'username'	=> 'required|alphanum|min:3|max:12|unique:users',
 			'email'		=> 'required|max:63|email|unique:users',
-			'password'	=> 'required|max:32|validPassword',
-			'conf-pass'	=> 'required|validPassword|same:password',
+			'password'	=> 'required|min:8|validPassword',
+			'conf-pass'	=> 'required|min:8|validPassword|same:password',
 		];
 	}
 
@@ -97,11 +94,16 @@ class RegisterController extends Controller
 			'fName.validName'			=> 'Please insert a valid name.',
 			'lName.validName'			=> 'Please insert a valid name.',
 
-			'fName.max'					=> 'Fisrt name must be less than 10 characters.',
-			'lName.max'					=> 'Last name must be less than 10 characters.',
-			'username.max'				=> 'Username must be less than 12 characters.',
-			'email.max'					=> 'A valid email must be less than 63 characters.',
-			'password.max'				=> 'Password must be less than 32 characters.',
+			'fName.max'					=> 'Fisrt name must be less than or equal to 10 characters.',
+			'lName.max'					=> 'Last name must be less than or equal to 10 characters.',
+			'username.max'				=> 'Username must be less than or equal to 12 characters.',
+			'email.max'					=> 'A valid email must be less than or equal to 63 characters.',
+
+			'fName.min'					=> 'Fisrt name must be at least 3 characters.',
+			'lName.min'					=> 'Last name must be at least 3 characters.',
+			'username.min'				=> 'Username must be at least 3 characters.',
+			'password.min'				=> 'Password must be at least 8 characters.',
+			'conf-pass.min'				=> 'Password must be at least 8 characters.',
 
 			'email.email'				=> 'Please insert a valid email.',
 			'username.alphanum'			=> 'Use alphanumeric chars.',

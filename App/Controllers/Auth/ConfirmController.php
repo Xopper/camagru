@@ -32,7 +32,7 @@ class ConfirmController extends Controller
 				 */
 				// echo "ok your account has been verified";
 				$this->session->set('flash', ['success' => 'ok your account has been verified']);
-				$this->url->redirect("/login");
+				$this->url->redirect("/");
 			} else {
 				echo "Hbet awa hbet";
 			}

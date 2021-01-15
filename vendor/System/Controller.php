@@ -81,7 +81,7 @@ abstract class Controller
 				'csrf' => $CSRFflag,
 			]);
 		}
-		echo $json;
+		return $json;
 	}
 
 	/**

@@ -83,10 +83,11 @@ class DatabaseHandler
 				$DB_PASS,
 				array(
 					PDO::MYSQL_ATTR_INIT_COMMAND    => "SET NAMES UTF8",
-					PDO::ATTR_ERRMODE                 => PDO::ERRMODE_EXCEPTION,
-					PDO::ATTR_DEFAULT_FETCH_MODE     => PDO::FETCH_OBJ,
+					PDO::ATTR_ERRMODE               => PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_DEFAULT_FETCH_MODE    => PDO::FETCH_OBJ,
 				)
 			);
+			// static::$handler->exec("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
 		} catch (PDOException $e) {
 			die($e->getMessage());
 		}
@@ -136,6 +137,7 @@ class DatabaseHandler
 		$this->addToBinding($bindings);
 		return $this;
 	}
+
 	/**
 	 * DML : Data Manipulation Language [INSERT, UPDATE, DELETE queries]
 	 */
@@ -153,6 +155,7 @@ class DatabaseHandler
 		$this->reset();
 		return $this;
 	}
+
 	/**
 	 * DML : Data Manipulation Language [INSERT, UPDATE, DELETE queries]
 	 */
@@ -172,6 +175,7 @@ class DatabaseHandler
 		// $this->lastId = $this->getInstance()->lastInsertId();
 		return $this;
 	}
+
 	/**
 	 * Set Fields for INSERT and UPDATE methdes
 	 * @return string
@@ -185,6 +189,7 @@ class DatabaseHandler
 		$sql = rtrim($sql, ", ");
 		return $sql;
 	}
+
 	/**
 	 * Needs to fit with my old Employee model
 	 * like we need to add a table schema and get it from the users .e.g Model
@@ -198,6 +203,7 @@ class DatabaseHandler
 			$this->bindings[] = $value;
 		}
 	}
+
 	/**
 	 * Return Last insserted Id in data base
 	 * 
@@ -207,10 +213,12 @@ class DatabaseHandler
 	{
 		return $this->lastId;
 	}
+
 	public function query(...$bindings)
 	{
 		$sql = array_shift($bindings);
-		if (is_array($bindings[0]) and count($bindings) === 1) {
+		$i = 0;
+		if (isset($bindings[$i]) and is_array($bindings[0]) and count($bindings) === 1) {
 			$bindings = $bindings[0];
 		}
 		try {
@@ -230,27 +238,30 @@ class DatabaseHandler
 		}
 		return $stmt;
 	}
+
 	/**
 	 * the SELECT statement will be like that
 	 * SELECT COLUMNS(*) FROM TABLE_NAME LEFT JOIN TABLE_NAME_2 ON ... WHERE ... 
 	 * LIMIT NUMBER OFFSET NUMBER ORFER BY ... 
 	 */
-
 	public function select($select)
 	{
 		$this->selects[] = $select;
 		return $this;
 	}
+
 	public function limit($limit, $offset = 0)
 	{
 		$this->limit = $limit;
 		$this->offset = $offset;
 	}
+
 	public function join($join)
 	{
 		$this->joins = $join;
 		return $this;
 	}
+
 	public function orderBy($orderBy, $sort = "ASC")
 	{
 		$this->orderBy = [$orderBy, $sort];
@@ -269,12 +280,12 @@ class DatabaseHandler
 		if (!empty($this->wheres)) {
 			$sql .= " WHERE " . implode(" ", $this->wheres);
 		}
-		// die($sql);
 		$query = $this->query($sql, $this->bindings);
 		$this->rows = $query->rowCount();
 		$this->reset();
 		return $this;
 	}
+
 	public function fetch($table = null)
 	{
 		if (isset($table)) {
@@ -288,13 +299,13 @@ class DatabaseHandler
 		$this->reset();
 		return $result;
 	}
+
 	public function fetchAll($table = null)
 	{
 		if (isset($table)) {
 			$this->table = $table;
 		}
 		$sql = $this->fetchStatement();
-		// die($sql);
 
 		$stmt = $this->query($sql, $this->bindings);
 		$results = $stmt->fetchAll();
@@ -329,10 +340,12 @@ class DatabaseHandler
 		}
 		return $sql;
 	}
+
 	public function rows()
 	{
 		return $this->rows;
 	}
+	
 	private function reset()
 	{
 		$this->data = array();

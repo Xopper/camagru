@@ -10,6 +10,8 @@
 			name="username"
 			placeholder="enter your username"
 			required
+			minlength="3"
+			maxlength="12"
 		/>
 		<small id="_username">Error msg here</small>
 	</div>
@@ -23,17 +25,17 @@
 			name="password"
 			placeholder="enter your password"
 			required
+			minlength="8"
 		/>
 		<small id="_password">Error msg here</small>
 	</div>
 	<div class="form-control remember">
-		<input
-			type="checkbox"
-			id="remember"
-			name="remember"
-			value="on"
-		/>
-		<label for="remember">Remember me</label><br />
+
+
+	<label class="custom-checkbox">
+ 	 <input type="checkbox" id="remember" name="remember" value="on"/>
+   	 <span class="label-text">Remember me</span>
+  	</label>
 	</div>
 	<input
 		type="hidden"
@@ -42,9 +44,8 @@
 		value="<?= $token ?>"
 	/>
 
-	<button id="btn-submit" class="btn-submit" type="submit" data-loading-text="<i class='fa fa-spinner fa-spin '></i>">Login</button>
+	<button id="btn-submit" class="btn-submit" type="submit" data-loading-text="<i class='fa fa-spinner fa-spin'></i>">Login</button>
 
-	<!-- <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i> !-->
 	<p class="login">
 		or new to the website ? <a href="/register">Register</a>
 	</p>
