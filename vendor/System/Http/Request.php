@@ -17,8 +17,7 @@ class Request
 
 	public function prepareUrl()
 	{
-		// pre($_SERVER);
-		// die();
+
 		$scriptName =  dirname($this->server('SCRIPT_NAME'));
 		$requstUri = $this->server('REQUEST_URI');
 		if (strpos($requstUri, '?') !== FALSE) :
@@ -43,8 +42,13 @@ class Request
 	{
 		return array_get($_GET, $key, $default);
 	}
-	public function post($key, $default = null)
+	public function post($key, $default = null, $flag = false)
 	{
+		if (!$flag){
+			if (is_array($_POST[$key])){
+				$_POST[$key] = "";
+			}
+		}
 		return array_get($_POST, $key, $default);
 	}
 	public function method()
