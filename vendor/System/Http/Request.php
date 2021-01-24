@@ -17,17 +17,24 @@ class Request
 
 	public function prepareUrl()
 	{
-		pre();
 		$scriptName =  dirname($this->server('SCRIPT_NAME'));
 		$requstUri = $this->server('REQUEST_URI');
+		// pre($scriptName);
+		// pre($requstUri);
+		// die($requstUri !== '/');
+
 		if (strpos($requstUri, '?') !== FALSE) :
 			list($requstUri, $queryStr) = explode('?', $requstUri);
 		endif;
-		if ($requstUri !== '/') :
-			$this->url = rtrim(preg_replace('#^' . $scriptName . '$#', '', $requstUri), "/");
-		else :
-			$this->url = $requstUri;
-		endif;
+
+		$this->url = rtrim(preg_replace('#^' . $scriptName . '#', '', $requstUri), "/");
+
+
+		die($this->url);
+		// if ($requstUri !== '/') :
+		// else :
+		// 	$this->url = $requstUri;
+		// endif;
 		$this->baseUrl = $this->server('REQUEST_SCHEME') . '://' . $this->server('HTTP_HOST') . $scriptName;
 	}
 	/**

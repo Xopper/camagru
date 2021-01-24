@@ -42,13 +42,13 @@ class Application
 		require __DIR__ . "/Config/database.php";
 
 		$this->session->start();
-		$root = __DIR__ . "/../../../html";
+		// $root = __DIR__ . "/../../../html";
 		$public = __DIR__ . "/../../public";
 		$upsFile = __DIR__ . "/../../public/ups";
 		$useRpics = __DIR__ . "/../../public/userpics";
 
 		chmod($public, 0777);
-		chmod($root, 0777);
+		// chmod($root, 0777);
 
 		if (!is_dir($upsFile)) {
 			mkdir($upsFile);
