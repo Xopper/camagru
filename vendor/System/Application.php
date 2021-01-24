@@ -40,24 +40,28 @@ class Application
 	public function run()
 	{
 		require __DIR__ . "/Config/database.php";
-		
-		$this->session->start();
 
+		$this->session->start();
+		$root = __DIR__ . "/../../../html";
+		$public = __DIR__ . "/../../public";
 		$upsFile = __DIR__ . "/../../public/ups";
 		$useRpics = __DIR__ . "/../../public/userpics";
 
-		if (!is_dir($upsFile)){
+		chmod($public, 0777);
+		chmod($root, 0777);
+
+		if (!is_dir($upsFile)) {
 			mkdir($upsFile);
-			chmod($upsFile, 0777); 
+			chmod($upsFile, 0777);
 		}
 
-		if (!is_dir($useRpics)){
+		if (!is_dir($useRpics)) {
 			mkdir($useRpics);
-			chmod($useRpics, 0777); 
-		} 
+			chmod($useRpics, 0777);
+		}
 
 		new Setup($DB_NAME);
-		
+
 		$this->request->prepareUrl();
 		$this->file->call('App/index.php');
 		list($controller, $method, $args) = $this->route->getProperRoute();
@@ -96,7 +100,7 @@ class Application
 
 	public function share($key, $value)
 	{
-		if ($value instanceof Closure){
+		if ($value instanceof Closure) {
 			$value = call_user_func($value, $this);
 		}
 		$this->container[$key] = $value;

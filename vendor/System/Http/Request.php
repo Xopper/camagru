@@ -17,7 +17,6 @@ class Request
 
 	public function prepareUrl()
 	{
-
 		$scriptName =  dirname($this->server('SCRIPT_NAME'));
 		$requstUri = $this->server('REQUEST_URI');
 		if (strpos($requstUri, '?') !== FALSE) :
@@ -44,8 +43,8 @@ class Request
 	}
 	public function post($key, $default = null, $flag = false)
 	{
-		if (!$flag){
-			if (is_array($_POST[$key])){
+		if (!$flag) {
+			if (is_array($_POST[$key])) {
 				$_POST[$key] = "";
 			}
 		}
@@ -64,9 +63,9 @@ class Request
 	 */
 	public function file($input)
 	{
-		if (!isset($this->files[$input])){
+		if (!isset($this->files[$input])) {
 			$uploadedFile = new Upload($input);
-			$this->files[$input] = $uploadedFile;			
+			$this->files[$input] = $uploadedFile;
 		}
 		return $this->files[$input];
 	}

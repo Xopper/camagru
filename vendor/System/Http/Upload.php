@@ -94,13 +94,13 @@ class Upload
 	 */
 	private function getFileData($input)
 	{
-		if (empty($_FILES[$input]))	return ; // End processing upload
+		if (empty($_FILES[$input]))	return; // End processing upload
 
 		$this->filesCount = count($_FILES[$input]['name']);
 
 		$this->errors = $_FILES[$input]['error'];
 
-		if (!$this->checkErrors()) return ; // End processing upload
+		if (!$this->checkErrors()) return; // End processing upload
 
 		$this->files = $_FILES[$input]; // after checking if there is no error [+] usfull for exists() 
 
@@ -203,8 +203,7 @@ class Upload
 	 */
 	public function checkErrors()
 	{
-		foreach ($this->errors as $error)
-		{
+		foreach ($this->errors as $error) {
 			if ($error != UPLOAD_ERR_OK) return false;
 		}
 		return true;
@@ -217,8 +216,7 @@ class Upload
 	 */
 	private function setMimesType()
 	{
-		for ($i = 0; $i < $this->filesCount ; $i++)
-		{
+		for ($i = 0; $i < $this->filesCount; $i++) {
 			$this->mimes[$i] = mime_content_type($this->tempFiles[$i]);
 		}
 	}
@@ -228,9 +226,9 @@ class Upload
 	 * 
 	 * @return void
 	 */
-	private function setExtensions(){
-		for ($i = 0; $i < $this->filesCount ; $i++)
-		{
+	private function setExtensions()
+	{
+		for ($i = 0; $i < $this->filesCount; $i++) {
 			$fileInfo = pathinfo($this->filesName[$i]);
 			$this->extensions[$i] = strtolower($fileInfo['extension']);
 		}
@@ -241,9 +239,9 @@ class Upload
 	 * 
 	 * @return void
 	 */
-	private function setNamesOnly(){
-		for ($i = 0; $i < $this->filesCount ; $i++)
-		{
+	private function setNamesOnly()
+	{
+		for ($i = 0; $i < $this->filesCount; $i++) {
 			$fileInfo = pathinfo($this->filesName[$i]);
 			$this->namesOnly[$i] = $fileInfo['filename'];
 		}
@@ -257,10 +255,9 @@ class Upload
 	public function isImages()
 	{
 		// inalid contion or ($extension != $this->getExtensions()[$i])
-		for ($i = 0; $i < $this->filesCount ; $i++)
-		{
+		for ($i = 0; $i < $this->filesCount; $i++) {
 			list($type, $extension) = explode("/", $this->getMimesType()[$i]);
-			if (strpos($this->getMimesType()[$i], 'image/') !== 0 or !in_array($this->getExtensions()[$i], $this->allowedImageExtensions)){
+			if (strpos($this->getMimesType()[$i], 'image/') !== 0 or !in_array($this->getExtensions()[$i], $this->allowedImageExtensions)) {
 				// echo "Mime type => " . $this->getMimesType()[$i] . "<br />";
 				// echo "Real extension type => " . $this->getExtensions()[$i] . "<br />";
 				// echo "Fake entension type => " . $extension . "<br />";
@@ -285,18 +282,17 @@ class Upload
 		 * mkdir needs some server setup to work properlly
 		 * @link https://stackoverflow.com/questions/5246114/php-mkdir-permission-denied-problem
 		 */
-		if (!is_dir($target)){
+		if (!is_dir($target)) {
 			mkdir($target, 0777, true);
 			chmod($target, 0777);
 		}
 		$extensions = $this->getExtensions();
 		$files = [];
-		for ($i = 0; $i < $this->filesCount ; $i++)
-		{
-			if ($setRandNames){
+		for ($i = 0; $i < $this->filesCount; $i++) {
+			if ($setRandNames) {
 				$fileName = sha1(mt_rand()) . "_" . sha1(mt_rand()); // total lenght 81 chars
 				$fileName .= "." . $extensions[$i];
-			}else{
+			} else {
 				$fileName = $this->getFilesName()[$i];
 			}
 			$uploadedFilePath = $target . "/" . $fileName;
