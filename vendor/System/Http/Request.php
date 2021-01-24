@@ -17,6 +17,7 @@ class Request
 
 	public function prepareUrl()
 	{
+		pre();
 		$scriptName =  dirname($this->server('SCRIPT_NAME'));
 		$requstUri = $this->server('REQUEST_URI');
 		if (strpos($requstUri, '?') !== FALSE) :
