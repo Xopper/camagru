@@ -16,7 +16,7 @@ class ForgetpassController extends Controller
 		 */
 		$userModel = $this->load->model("User");
 		$userModel->reconnectFromCookie();
-		
+
 		if ($this->session->has('auth')) {
 			$this->session->set("flash", ['danger' => "You're already logged in."]);
 			$this->url->redirect("/");
@@ -55,7 +55,7 @@ class ForgetpassController extends Controller
 				$this->session->set("flash", ["success" => "Rest instructions sent to your email."]);
 				$json = json_encode([
 					'ok' => true,
-					'redirect' => '/',
+					'redirect' => url('/'),
 					'csrf' => $CSRFflag,
 				]);
 				$this->csrf->unsetCSRFToken();
@@ -75,7 +75,7 @@ class ForgetpassController extends Controller
 			echo $this->manageErrors($CSRFflag, $from_schema, $errors, $this->messages());
 		}
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
@@ -89,7 +89,7 @@ class ForgetpassController extends Controller
 	/**
 	 * @inheritDoc
 	 */
-	protected function messages():array
+	protected function messages(): array
 	{
 		return [
 			'email.required'	=> 'Please fill out this field.',

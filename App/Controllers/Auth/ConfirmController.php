@@ -34,7 +34,10 @@ class ConfirmController extends Controller
 				$this->session->set('flash', ['success' => 'ok your account has been verified']);
 				$this->url->redirect("/");
 			} else {
-				echo "Hbet awa hbet";
+				/**
+				 * we will come back to this later TODO
+				 */
+				echo "hhhh dazet ";
 			}
 		}
 	}

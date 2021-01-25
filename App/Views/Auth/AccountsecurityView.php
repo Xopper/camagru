@@ -19,15 +19,10 @@
 		<small id="_Opassword">Error msg here</small>
 	</div>
 
-	<input
-		type="hidden"
-		id="_token"
-		name="token"
-		value="<?= $token ?>"
-	/>
+	<input type="hidden" id="_token" name="token" value="<?= $token ?>" />
 
 	<button id="btn-submit" class="btn-submit" type="submit">submit</button>
 	<p class="login">
-		wanna back to your account ? <a href="/account/">Account</a>
+		wanna back to your account ? <a href="<?= url("/account"); ?>">Account</a>
 	</p>
 </form>

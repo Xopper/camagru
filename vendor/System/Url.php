@@ -14,7 +14,7 @@ class Url
 
 	public function link($to)
 	{
-		return $this->app->request->baseUrl() . trim($to, "/");
+		return $this->app->request->baseUrl() . "/" . trim($to, "/");
 	}
 	public function redirect($to)
 	{

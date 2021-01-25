@@ -4,8 +4,25 @@ namespace System\Http;
 
 class Request
 {
+	/**
+	 * Script name
+	 * 
+	 * @var string
+	 */
+	private $scriptName;
+
+	/**
+	 * Url
+	 * 
+	 * @var string
+	 */
 	private $url;
 
+	/**
+	 * Base url
+	 * 
+	 * @var string
+	 */
 	private $baseUrl;
 
 	/**
@@ -17,26 +34,21 @@ class Request
 
 	public function prepareUrl()
 	{
-		$scriptName =  dirname($this->server('SCRIPT_NAME'));
+		$this->scriptName =  dirname($this->server('SCRIPT_NAME'));
 		$requstUri = $this->server('REQUEST_URI');
-		// pre($scriptName);
-		// pre($requstUri);
-		// die($requstUri !== '/');
 
 		if (strpos($requstUri, '?') !== FALSE) :
 			list($requstUri, $queryStr) = explode('?', $requstUri);
 		endif;
 
-		$this->url = rtrim(preg_replace('#^' . $scriptName . '#', '', $requstUri), "/");
+		$this->url = rtrim(preg_replace('#^' . $this->scriptName . '#', '', $requstUri), "/");
+		if ($this->url == "") :
+			$this->url = "/";
+		endif;
 
-
-		die($this->url);
-		// if ($requstUri !== '/') :
-		// else :
-		// 	$this->url = $requstUri;
-		// endif;
-		$this->baseUrl = $this->server('REQUEST_SCHEME') . '://' . $this->server('HTTP_HOST') . $scriptName;
+		$this->baseUrl = $this->server('REQUEST_SCHEME') . '://' . $this->server('HTTP_HOST') . $this->scriptName;
 	}
+
 	/**
 	 * Get the given value from the golbal variable
 	 * 
@@ -82,6 +94,7 @@ class Request
 	{
 		return $this->baseUrl;
 	}
+
 	public function url()
 	{
 		return $this->url;

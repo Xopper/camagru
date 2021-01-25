@@ -53,7 +53,7 @@ class ResetController extends Controller
 			$json = json_encode([
 				'ok' => true,
 				'csrf' => $CSRFflag,
-				'redirect' => '/account',
+				'redirect' => url('/account'),
 			]);
 			echo $json;
 		} else {
@@ -75,7 +75,7 @@ class ResetController extends Controller
 	/**
 	 * @inheritDoc
 	 */
-	protected function messages():array
+	protected function messages(): array
 	{
 		return [
 			'Npassword.required'		=> 'Please fill out this field.',
@@ -88,5 +88,4 @@ class ResetController extends Controller
 			'conf-Npass.same'			=> 'Please confirm your password correctly.',
 		];
 	}
-
 }

@@ -34,7 +34,7 @@ class RegisterController extends Controller
 	 */
 	public function submit()
 	{
-		$from_schema = ['_fName','_lName','_username','_email','_password','_conf-pass'];
+		$from_schema = ['_fName', '_lName', '_username', '_email', '_password', '_conf-pass'];
 		$errors = $this->validate->isValid($this->rules());
 		$CSRFflag = $this->csrf->checkToken();
 		if (empty($errors) && $CSRFflag) {
@@ -53,7 +53,7 @@ class RegisterController extends Controller
 			$this->session->set('flash', ['success' => 'Check your inbox mail.']);
 			$json = json_encode([
 				'ok' => true,
-				'redirect' => '/',
+				'redirect' => url("/"),
 				'csrf' => $CSRFflag,
 			]);
 			$this->csrf->unsetCSRFToken();
@@ -66,7 +66,7 @@ class RegisterController extends Controller
 	/**
 	 * @inheritDoc
 	 */
-	protected function rules():array
+	protected function rules(): array
 	{
 		return [
 			'fName'		=> 'required|validName|min:3|max:10',
@@ -80,8 +80,8 @@ class RegisterController extends Controller
 
 	/** 
 	 * @inheritDoc
-	*/
-	protected function messages():array
+	 */
+	protected function messages(): array
 	{
 		return [
 			'fName.required'			=> 'Please fill out first name field.',

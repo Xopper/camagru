@@ -49,7 +49,7 @@ class LoginController extends Controller
 				$this->session->set('flash', ['success' => 'Welcome back.']);
 				$json = json_encode([
 					'ok' => true,
-					'redirect' => '/',
+					'redirect' => url('/'),
 					'csrf' => $CSRFflag,
 				]);
 				$this->csrf->unsetCSRFToken();

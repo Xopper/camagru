@@ -11,7 +11,7 @@ class AccountController extends Controller
 	{
 		/**
 		 * Reconnect from Cookies
-		*/
+		 */
 		$userModel = $this->load->model("User");
 		$userModel->reconnectFromCookie();
 
@@ -31,7 +31,7 @@ class AccountController extends Controller
 	}
 	public function submit()
 	{
-		$from_schema = ['_fName', '_lName','_username', '_email', '_password'];
+		$from_schema = ['_fName', '_lName', '_username', '_email', '_password'];
 		$errors = $this->validate->isValid($this->rules());
 		$CSRFflag = $this->csrf->checkToken();
 		if (empty($errors) && $CSRFflag) {
@@ -53,7 +53,7 @@ class AccountController extends Controller
 				$json = json_encode([
 					'ok' => true,
 					'csrf' => $CSRFflag,
-					'redirect' => '/account',
+					'redirect' => url('/account'),
 				]);
 				echo $json;
 			} else {
@@ -61,7 +61,7 @@ class AccountController extends Controller
 				$json = json_encode([
 					'ok' => true,
 					'csrf' => $CSRFflag,
-					'redirect' => '/account',
+					'redirect' => url('/account'),
 				]);
 				echo $json;
 			}
@@ -73,7 +73,7 @@ class AccountController extends Controller
 	/**
 	 * @inheritDoc
 	 */
-	protected function rules():array
+	protected function rules(): array
 	{
 		return [
 			'fName'			=> 'required|validName|min:3|max:10',
@@ -87,7 +87,7 @@ class AccountController extends Controller
 	/**
 	 * @inheritDoc
 	 */
-	protected function messages():array
+	protected function messages(): array
 	{
 		return [
 			'fName.required'			=> 'Please fill out first name field.',
@@ -103,12 +103,12 @@ class AccountController extends Controller
 			'lName.max'					=> 'Last name must be less than or equal to 10 characters.',
 			'username.max'				=> 'Username must be less than or equal to 12 characters.',
 			'email.max'					=> 'A valid email must be less than or equal to 63 characters.',
-			
+
 			'fName.min'					=> 'Fisrt name must be at least 3 characters.',
 			'lName.min'					=> 'Last name must be at least 3 characters.',
 			'username.min'				=> 'Username must be at least 3 characters.',
 			'password.min'				=> 'Username must be at least 8 characters.',
-			
+
 			'email.email'				=> 'Please insert a valid email.',
 			'username.alphanum'			=> 'Use alphanumeric chars.',
 			'password.validPassword'	=> 'Invalid password.',

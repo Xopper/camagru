@@ -32,21 +32,16 @@
 	</div>
 
 	<div class="form-control notification">
-	<label class="custom-checkbox">
- 	 <input type="checkbox" id="notification_on" name="notification_on" value="on" <?= $auth->notification_on ? "checked" : "" ?> />
-   	 <span class="label-text">Enable notifications</span>
-  	</label>
+		<label class="custom-checkbox">
+			<input type="checkbox" id="notification_on" name="notification_on" value="on" <?= $auth->notification_on ? "checked" : "" ?> />
+			<span class="label-text">Enable notifications</span>
+		</label>
 	</div>
 
-	<input
-		type="hidden"
-		id="_token"
-		name="token"
-		value="<?= $token ?>"
-	/>
+	<input type="hidden" id="_token" name="token" value="<?= $token ?>" />
 
 	<button id="btn-submit" class="btn-submit" type="submit">submit</button>
 	<p class="login">
-		or wanna change your password ? <a href="/account/security">Security</a>
+		or wanna change your password ? <a href="<?= url("/account/security"); ?>">Security</a>
 	</p>
 </form>

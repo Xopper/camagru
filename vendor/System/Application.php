@@ -42,13 +42,17 @@ class Application
 		require __DIR__ . "/Config/database.php";
 
 		$this->session->start();
-		// $root = __DIR__ . "/../../../html";
+
+		/**
+		 * you need to give the root folder 777 permision
+		 * manualy till this moment 
+		 */
+
 		$public = __DIR__ . "/../../public";
 		$upsFile = __DIR__ . "/../../public/ups";
 		$useRpics = __DIR__ . "/../../public/userpics";
 
 		chmod($public, 0777);
-		// chmod($root, 0777);
 
 		if (!is_dir($upsFile)) {
 			mkdir($upsFile);
@@ -65,6 +69,8 @@ class Application
 		$this->request->prepareUrl();
 		$this->file->call('App/index.php');
 		list($controller, $method, $args) = $this->route->getProperRoute();
+		// pre($this->route->routes);
+		// die();
 		$this->load->action($controller, $method, $args);
 	}
 

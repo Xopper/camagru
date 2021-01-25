@@ -44,7 +44,7 @@ class AccountsecurityController extends Controller
 				$json = json_encode([
 					'ok' => true,
 					'csrf' => $CSRFflag,
-					'redirect' => '/account/security',
+					'redirect' => url('/account/security'),
 				]);
 				echo $json;
 			} else {
@@ -52,7 +52,7 @@ class AccountsecurityController extends Controller
 				$json = json_encode([
 					'ok' => true,
 					'csrf' => $CSRFflag,
-					'redirect' => '/account',
+					'redirect' => url('/account'),
 				]);
 				echo $json;
 			}
@@ -82,12 +82,12 @@ class AccountsecurityController extends Controller
 			'Npassword.required'		=> 'Please fill out this field.',
 			'Npassword.min'				=> 'Password must be at least 8 characters.',
 			'Npassword.validPassword'	=> 'Use [lower-Upper] case, special chars and numbers.',
-			
+
 			'conf-Npass.required'		=> 'Please fill out this field.',
 			'conf-Npass.min'			=> 'Password must be at least 8 characters.',
 			'conf-Npass.same'			=> 'Please confirm your password correctly.',
 			'conf-Npass.validPassword'	=> 'Use [lower-Upper] case, special chars and numbers.',
-			
+
 			'Opassword.required'		=> 'Please fill out this field.',
 			'Opassword.min'				=> 'Password must be at least 8 characters.',
 			'Opassword.validPassword'	=> 'Invalid password.',

@@ -9,7 +9,7 @@ class Route
 
 	private $notFound;
 
-	private $routes = array();
+	public $routes = array();
 	public function __construct(Application $app)
 	{
 		$this->app = $app;
@@ -17,6 +17,8 @@ class Route
 
 	public function add($url, $action, $requestMethod = 'GET')
 	{
+		// $url = !empty($this->app->request->scriptName()) ? $this->app->request->scriptName() . $url : $url;
+
 		$route = [
 			'url'		=> $url,
 			'pattern'	=> $this->getGeneratedPattern($url),
@@ -24,6 +26,9 @@ class Route
 			'method'	=> strtoupper($requestMethod),
 		];
 		$this->routes[] = $route;
+
+		// pre($this->routes);
+		// die();
 	}
 	private function getGeneratedPattern($url)
 	{
@@ -53,8 +58,6 @@ class Route
 	}
 	public function getProperRoute()
 	{
-		// pre($this->routes);
-		// die($this->app->request->url());
 		foreach ($this->routes as $route) {
 			if ($this->isMatching($route['pattern'], $route['method'])) {
 				//pre($this->routes);
