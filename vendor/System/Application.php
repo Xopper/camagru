@@ -74,6 +74,7 @@ class Application
 
 	/**
 	 * Load all called classes using spl autload function
+	 * 
 	 * @return void
 	 */
 	private function registerClasses()

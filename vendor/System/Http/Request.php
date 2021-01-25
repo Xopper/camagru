@@ -32,9 +32,12 @@ class Request
 	 */
 	private $files = [];
 
+	/**
+	 * Parse the request url
+	 */
 	public function prepareUrl()
 	{
-		$this->scriptName =  dirname($this->server('SCRIPT_NAME'));
+		$this->scriptName = rtrim(dirname($this->server('SCRIPT_NAME')), "/");
 		$requstUri = $this->server('REQUEST_URI');
 
 		if (strpos($requstUri, '?') !== FALSE) :
@@ -42,6 +45,7 @@ class Request
 		endif;
 
 		$this->url = rtrim(preg_replace('#^' . $this->scriptName . '#', '', $requstUri), "/");
+
 		if ($this->url == "") :
 			$this->url = "/";
 		endif;
@@ -57,10 +61,29 @@ class Request
 	{
 		return array_get($_SERVER, $key, $default);
 	}
+
+	/**
+	 * Get the given value from the Get super variable
+	 * 
+	 * @param mixed $key
+	 * @param mixed $default
+	 * 
+	 * @return mixed
+	 */
 	public function get($key, $default = null)
 	{
 		return array_get($_GET, $key, $default);
 	}
+
+	/**
+	 * the given value from the POST super variable
+	 * 
+	 * @param mixed $key
+	 * @param mixed $default
+	 * @param bool $flag
+	 * 
+	 * @return mixed
+	 */
 	public function post($key, $default = null, $flag = false)
 	{
 		if (!$flag) {
@@ -70,6 +93,12 @@ class Request
 		}
 		return array_get($_POST, $key, $default);
 	}
+
+	/**
+	 * Get the request Method
+	 * 
+	 * @return string
+	 */
 	public function method()
 	{
 		return $this->server('REQUEST_METHOD');
@@ -79,6 +108,7 @@ class Request
 	 * Get the uploaded file object for the given input
 	 * 
 	 * @param string $input
+	 * 
 	 * @return \System\Http\Upload 
 	 */
 	public function file($input)
