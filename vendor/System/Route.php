@@ -9,7 +9,7 @@ class Route
 
 	private $notFound;
 
-	public $routes = array();
+	private $routes = array();
 	public function __construct(Application $app)
 	{
 		$this->app = $app;
@@ -17,8 +17,6 @@ class Route
 
 	public function add($url, $action, $requestMethod = 'GET')
 	{
-		// $url = !empty($this->app->request->scriptName()) ? $this->app->request->scriptName() . $url : $url;
-
 		$route = [
 			'url'		=> $url,
 			'pattern'	=> $this->getGeneratedPattern($url),
@@ -26,9 +24,6 @@ class Route
 			'method'	=> strtoupper($requestMethod),
 		];
 		$this->routes[] = $route;
-
-		// pre($this->routes);
-		// die();
 	}
 	private function getGeneratedPattern($url)
 	{
@@ -60,7 +55,6 @@ class Route
 	{
 		foreach ($this->routes as $route) {
 			if ($this->isMatching($route['pattern'], $route['method'])) {
-				//pre($this->routes);
 				$arguments = $this->getArgumentsFrom($route['pattern']);
 				list($controller, $action) = explode('@', $route['action']);
 				return array($controller, $action, $arguments);

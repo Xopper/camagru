@@ -51,6 +51,3 @@ $app->share('CommonLayout', function ($app) {
 
 $app->route->add('/404', 'notFound');
 $app->route->notFound('/404');
-
-// pre($app->route->routes);
-// die();
